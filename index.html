@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa království Rarach</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --parchment: #f5edd6;
+    --parchment-dark: #ede0bc;
+    --parchment-deep: #e0cfa0;
+    --brown-dark: #2c1f07;
+    --brown-header: #5c3a1e;
+    --gold-dark: #8b6914;
+    --gold-light: #c9a84c;
+    --gold-pale: #f0d98a;
+    --blue-royal: #1a3a6e;
+    --blue-mid: #2a5298;
+    --ink: #1e1408;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: #1a1208;
+    font-family: 'Crimson Text', Georgia, serif;
+    color: var(--brown-dark);
+    overflow-x: hidden;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(139,105,20,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse at 50% 100%, rgba(26,18,8,0.9) 0%, transparent 60%),
+      #0e0a04;
+    overflow: hidden;
+    padding: 3rem 1.5rem 5rem;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle, rgba(201,168,76,0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  .hero-ornament {
+    font-size: 2rem;
+    color: var(--gold-dark);
+    letter-spacing: 1rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.7;
+    animation: fadeIn 2s ease forwards;
+  }
+
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.65rem, 1.5vw, 0.8rem);
+    letter-spacing: 0.35em;
+    color: var(--gold-dark);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    animation: fadeIn 2s ease 0.3s both;
+  }
+
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.8rem, 8vw, 6rem);
+    font-weight: 700;
+    color: var(--gold-pale);
+    text-align: center;
+    line-height: 1.05;
+    text-shadow: 0 0 60px rgba(201,168,76,0.3), 0 2px 4px rgba(0,0,0,0.8);
+    animation: fadeIn 2s ease 0.6s both;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-title-sub {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    color: var(--gold-dark);
+    text-align: center;
+    letter-spacing: 0.1em;
+    animation: fadeIn 2s ease 0.9s both;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-tagline {
+    font-family: 'Crimson Text', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    color: var(--parchment-dark);
+    text-align: center;
+    max-width: 560px;
+    line-height: 1.7;
+    opacity: 0.85;
+    animation: fadeIn 2s ease 1.2s both;
+    margin-bottom: 3rem;
+  }
+
+  .hero-scroll {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    animation: fadeIn 2s ease 2s both;
+    cursor: pointer;
+  }
+
+  .hero-scroll span {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--gold-dark);
+    text-transform: uppercase;
+  }
+
+  .scroll-arrow {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--gold-dark), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* ─── SECTIONS WRAPPER ─── */
+  .page-body {
+    background: var(--parchment);
+    position: relative;
+  }
+
+  .page-body::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 120px;
+    background: linear-gradient(to bottom, #0e0a04, var(--parchment));
+    pointer-events: none;
+  }
+
+  section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+  }
+
+  /* ─── SECTION HEADERS ─── */
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    color: var(--gold-dark);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    color: var(--brown-header);
+    text-align: center;
+    line-height: 1.3;
+    padding: 0.2em 0;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .section-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1.5rem auto 2.5rem;
+    max-width: 320px;
+  }
+
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--gold-dark);
+    opacity: 0.4;
+  }
+
+  .section-divider span {
+    color: var(--gold-dark);
+    font-size: 1rem;
+    opacity: 0.7;
+  }
+
+  /* ─── INTRO / PŘÍBĚH ─── */
+  .intro-text {
+    font-size: clamp(1.1rem, 2vw, 1.25rem);
+    line-height: 1.8;
+    color: var(--brown-dark);
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  /* ─── FEATURES GRID ─── */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .feature-card {
+    background: var(--parchment-dark);
+    border: 1px solid rgba(139,105,20,0.3);
+    border-radius: 3px;
+    padding: 1.5rem 1.5rem 1.75rem;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(44,31,7,0.12);
+  }
+
+  .feature-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .feature-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: var(--brown-header);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--brown-dark);
+    opacity: 0.85;
+  }
+
+  /* ─── UKÁZKA CESTY ─── */
+  .journey {
+    background: var(--parchment-deep);
+    border-top: 1px solid rgba(139,105,20,0.2);
+    border-bottom: 1px solid rgba(139,105,20,0.2);
+  }
+
+  .stations-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.75rem;
+    margin-top: 2.5rem;
+  }
+
+  .station-chip {
+    background: var(--parchment);
+    border: 1px solid rgba(139,105,20,0.25);
+    border-radius: 3px;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    transition: background 0.15s;
+  }
+
+  .station-chip:hover { background: #f0e8ce; }
+
+  .station-num {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--gold-dark);
+    background: var(--brown-header);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .station-info .station-code {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    color: var(--gold-dark);
+    text-transform: uppercase;
+    display: block;
+  }
+
+  .station-info .station-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--brown-dark);
+    line-height: 1.3;
+    display: block;
+  }
+
+  /* ─── DOPIS LOREL ─── */
+  .letter-section { background: var(--parchment); }
+
+  .letter-wrapper {
+    max-width: 560px;
+    margin: 0 auto;
+    background: #f0e4c0;
+    border: 1px solid rgba(139,105,20,0.35);
+    border-radius: 2px;
+    padding: 2.5rem 3rem;
+    position: relative;
+    box-shadow: 0 4px 32px rgba(44,31,7,0.15), inset 0 0 0 1px rgba(201,168,76,0.15);
+  }
+
+  .letter-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(201,168,76,0.2);
+    pointer-events: none;
+    border-radius: 1px;
+  }
+
+  .letter-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .letter-ornament {
+    font-size: 2rem;
+    color: var(--gold-dark);
+    opacity: 0.6;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .letter-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--gold-dark);
+    text-transform: uppercase;
+  }
+
+  .letter-divider {
+    width: 100px;
+    height: 1px;
+    background: var(--gold-dark);
+    opacity: 0.3;
+    margin: 1rem auto;
+  }
+
+  .letter-body {
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 1.85;
+    color: var(--brown-dark);
+  }
+
+  .letter-body p { margin-bottom: 1em; }
+  .letter-body p:last-of-type { margin-bottom: 0; }
+
+  .letter-salutation {
+    font-style: italic;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .letter-signature {
+    text-align: right;
+    margin-top: 1.5rem;
+    font-style: italic;
+  }
+
+  .letter-signature .sig-name {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--brown-header);
+    display: block;
+  }
+
+  .letter-signature .sig-title {
+    font-size: 0.85rem;
+    color: var(--gold-dark);
+    display: block;
+    margin-top: 0.2rem;
+  }
+
+  .letter-seal {
+    width: 64px;
+    height: 64px;
+    background: var(--brown-header);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1.5rem auto 0;
+    box-shadow: 0 2px 8px rgba(44,31,7,0.4), inset 0 1px 3px rgba(255,255,255,0.1);
+  }
+
+  .letter-seal span { font-size: 1.8rem; }
+
+  .letter-footnote {
+    text-align: center;
+    font-size: 0.8rem;
+    font-style: italic;
+    color: var(--gold-dark);
+    margin-top: 1.5rem;
+    opacity: 0.7;
+  }
+
+  /* ─── CTA hrát ─── */
+  .cta-section {
+    text-align: center;
+    background: var(--brown-header);
+    padding: 5rem 2rem;
+  }
+
+  .cta-section .section-title { color: var(--gold-pale); }
+  .cta-section .section-label { color: var(--gold-dark); }
+  .cta-section p {
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--parchment-dark);
+    max-width: 520px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+    opacity: 0.85;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--gold-dark);
+    color: var(--parchment);
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 1rem 2.5rem;
+    border: 1px solid var(--gold-light);
+    border-radius: 2px;
+    transition: background 0.2s, color 0.2s, transform 0.1s;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    color: var(--brown-dark);
+    transform: translateY(-1px);
+  }
+
+  /* ─── PRŮVODCE HROU ─── */
+  .guide-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .guide-step {
+    display: flex;
+    gap: 1.25rem;
+  }
+
+  .step-num {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold-dark);
+    opacity: 0.35;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 2rem;
+  }
+
+  .step-content .step-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: var(--brown-header);
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.04em;
+  }
+
+  .step-content p {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--brown-dark);
+    opacity: 0.85;
+  }
+
+  /* ─── KE STAŽENÍ ─── */
+  .download-section { background: var(--parchment-dark); }
+
+  .download-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  .download-card {
+    background: var(--parchment);
+    border: 1px solid rgba(139,105,20,0.3);
+    border-radius: 3px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.15s, box-shadow 0.15s;
+    cursor: pointer;
+  }
+
+  .download-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(44,31,7,0.1);
+    border-color: var(--gold-dark);
+  }
+
+  .download-icon { font-size: 2.2rem; margin-bottom: 0.75rem; display: block; }
+
+  .download-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    color: var(--brown-header);
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+
+  .download-desc {
+    font-size: 0.9rem;
+    color: var(--brown-dark);
+    opacity: 0.7;
+    line-height: 1.5;
+    display: block;
+    margin-bottom: 0.85rem;
+  }
+
+  .download-btn {
+    display: inline-block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    border: 1px solid var(--gold-dark);
+    padding: 0.4rem 0.9rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .download-btn:hover {
+    background: var(--gold-dark);
+    color: var(--parchment);
+  }
+
+  .download-card .download-btn + .download-btn {
+    margin-left: 0.3rem;
+  }
+
+  .download-card-multi .download-btn {
+    display: inline-block;
+    margin: 0.2rem;
+  }
+
+  .download-card-multi .btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.3rem;
+  }
+
+  .download-note {
+    text-align: center;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--brown-dark);
+    opacity: 0.6;
+    margin-top: 1.5rem;
+  }
+
+  /* ─── ZPĚTNÁ VAZBA ─── */
+  .feedback-section { text-align: center; }
+
+  .feedback-box {
+    background: var(--parchment-dark);
+    border: 1px solid rgba(139,105,20,0.25);
+    border-radius: 3px;
+    padding: 2.5rem 3rem;
+    max-width: 560px;
+    margin: 2rem auto 0;
+  }
+
+  .feedback-box p {
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--brown-dark);
+    opacity: 0.85;
+    margin-bottom: 1.5rem;
+  }
+
+  .btn-secondary {
+    display: inline-block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brown-header);
+    border: 1px solid var(--brown-header);
+    padding: 0.85rem 2rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .btn-secondary:hover {
+    background: var(--brown-header);
+    color: var(--parchment);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--brown-dark);
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+  }
+
+  footer .footer-seal { font-size: 1.5rem; opacity: 0.5; margin-bottom: 0.75rem; display: block; }
+
+  footer p {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--gold-dark);
+    opacity: 0.6;
+    text-transform: uppercase;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(14,10,4,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(139,105,20,0.2);
+    padding: 0.85rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: opacity 0.3s;
+  }
+
+  .nav-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: var(--gold-dark);
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--gold-dark);
+    text-decoration: none;
+    opacity: 0.7;
+    text-transform: uppercase;
+    transition: opacity 0.15s;
+  }
+
+  .nav-links a:hover { opacity: 1; }
+
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .letter-wrapper { padding: 2rem 1.5rem; }
+    .feedback-box { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Rarach</a>
+  <ul class="nav-links">
+    <li><a href="#pribehu">O hře</a></li>
+    <li><a href="#dopis">Dopis</a></li>
+    <li><a href="#stahnout">Ke stažení</a></li>
+    <li><a href="#zpetna-vazba">Zpětná vazba</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-ornament">✦ ✦ ✦</div>
+  <div class="hero-subtitle">Parkové muzeum Modřany · Vnitroblok Plácek</div>
+  <h1 class="hero-title">Mapa<br>království<br>Rarach</h1>
+  <div class="hero-title-sub">Dobrodružná hra pro poutnice</div>
+  <p class="hero-tagline">
+    Dvanáct stanovišť. Dvanáct pečetí.<br>
+    Jedna mapa, která ožije — až bude úplná.
+  </p>
+  <div class="hero-scroll" onclick="document.getElementById('pribehu').scrollIntoView({behavior:'smooth'})">
+    <span>Začít putování</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- PAGE BODY -->
+<div class="page-body">
+
+<!-- O HŘE -->
+<section id="pribehu">
+  <div class="section-label reveal">O hře</div>
+  <h2 class="section-title reveal">Co je království Rarach?</h2>
+  <div class="section-divider reveal"><span>✦</span></div>
+  <p class="intro-text reveal">
+    Rarach není online hra. Je to putování — skutečné, venkovní, s kamarádkou po boku.
+    Vnitroblok Parkového muzea v Modřanech se promění v pohádkovou říši, kde každé
+    stanoviště skrývá výzvu, každá odpověď odemyká pečeť a každá pečeť přibližuje
+    probuzení starého království.
+  </p>
+  <div class="features reveal">
+    <div class="feature-card">
+      <span class="feature-icon">🗺️</span>
+      <div class="feature-title">12 stanovišť</div>
+      <p class="feature-text">Skutečná místa vnitrobloku s popiskami a expozicemi — základ výzev a příběhů.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📜</span>
+      <div class="feature-title">Kvízy a úkoly</div>
+      <p class="feature-text">Historické kvízy, tvůrčí výzvy, pohybové úkoly i rituály — každá karta jiná.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔵</span>
+      <div class="feature-title">Dvanáct pečetí</div>
+      <p class="feature-text">Za splnění každého stanoviště získají hráčky pečeť — symbol do slepé mapy.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">⏱️</span>
+      <div class="feature-title">90–120 minut</div>
+      <p class="feature-text">Celá hra v klidném tempu. Vhodná pro děti ve věku 7–13 let.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STANOVIŠTĚ -->
+<section class="journey" id="stanoviste">
+  <div class="section-label reveal">Trasa putování</div>
+  <h2 class="section-title reveal">Dvanáct bran království</h2>
+  <div class="section-divider reveal"><span>✦</span></div>
+  <p class="intro-text reveal" style="font-style:italic; opacity:0.75;">
+    Každé stanoviště má jméno ze světa lidí — i jméno z pohádkové říše.
+  </p>
+  <div class="stations-preview reveal">
+    <div class="station-chip"><div class="station-num">I</div><div class="station-info"><span class="station-code">C1</span><span class="station-name">Železná brána</span></div></div>
+    <div class="station-chip"><div class="station-num">II</div><div class="station-info"><span class="station-code">C2</span><span class="station-name">Věž světla</span></div></div>
+    <div class="station-chip"><div class="station-num">III</div><div class="station-info"><span class="station-code">C3</span><span class="station-name">Šedý spánek</span></div></div>
+    <div class="station-chip"><div class="station-num">IV</div><div class="station-info"><span class="station-code">C4</span><span class="station-name">Elfí čtvrť</span></div></div>
+    <div class="station-chip"><div class="station-num">V</div><div class="station-info"><span class="station-code">C5</span><span class="station-name">Kouzelný kruh tance</span></div></div>
+    <div class="station-chip"><div class="station-num">VI</div><div class="station-info"><span class="station-code">C6</span><span class="station-name">Rada starších</span></div></div>
+    <div class="station-chip"><div class="station-num">VII</div><div class="station-info"><span class="station-code">C7</span><span class="station-name">Sladká kovárna</span></div></div>
+    <div class="station-chip"><div class="station-num">VIII</div><div class="station-info"><span class="station-code">C8</span><span class="station-name">Jeviště iluzí</span></div></div>
+    <div class="station-chip"><div class="station-num">IX</div><div class="station-info"><span class="station-code">C9</span><span class="station-name">Tréninkový kruh válečnic</span></div></div>
+    <div class="station-chip"><div class="station-num">X</div><div class="station-info"><span class="station-code">C10</span><span class="station-name">Zahrada kouzelných bylín</span></div></div>
+    <div class="station-chip"><div class="station-num">XI</div><div class="station-info"><span class="station-code">C11</span><span class="station-name">Stará pevnost</span></div></div>
+    <div class="station-chip"><div class="station-num">XII</div><div class="station-info"><span class="station-code">C12</span><span class="station-name">Kámen počátků</span></div></div>
+  </div>
+</section>
+
+<!-- DOPIS LOREL -->
+<section class="letter-section" id="dopis">
+  <div class="section-label reveal">Ochutnávka hry</div>
+  <h2 class="section-title reveal">Dopis, který jste neočekávaly</h2>
+  <div class="section-divider reveal"><span>✦</span></div>
+  <p class="intro-text reveal" style="margin-bottom: 2.5rem;">
+    Takhle hra začíná. Dopis přijde bez obálky, bez odesílatele.
+    Prostě leží — jako by tu byl vždy.
+  </p>
+  <div class="letter-wrapper reveal">
+    <div class="letter-header">
+      <span class="letter-ornament">✦</span>
+      <span class="letter-label">Dopis poslední strážkyně</span>
+      <div class="letter-divider"></div>
+    </div>
+    <div class="letter-body">
+      <p class="letter-salutation">Poutnice,</p>
+      <p>čtu ve hvězdách, že přicházíte. Jsem Lorel, poslední strážkyně království Rarach — místa, které lidé přejmenovali na park, zastavěli domy a zapomněli na ně. Ale zem si pamatuje vše.</p>
+      <p>Před tisíci lety svěřili elfové tohoto kraje svou magii do dvanácti runových pečetí. Ukryli je tam, kde si jejich svět a svět lidí podaly ruce — v místech, která se zapsala do paměti země. Pečeti tu spí dodnes. Čekají na ty, které jsou dost odvážné, aby šly za hlasem, jenž volá z kamenů a stromů.</p>
+      <p>Ten hlas slyšíte. Jinak byste tento dopis nenašly.</p>
+      <p>Vaše poslání: projít dvanácti stanovišti starého království, probudit každou pečeť a přinést ji zpět na mapu. Když bude mapa úplná — Rarach se probudí.</p>
+      <p><em>Varování: Každé stanoviště je zkouškou. Ne silou, ale pozorností, odvahou a vynalézavostí. Jste-li připraveny — vydejte se na sever, k místu, kde do království poprvé vjela železnice.</em></p>
+      <p>Čekám na vás na druhé straně mapy.</p>
+    </div>
+    <div class="letter-signature">
+      <span class="sig-name">— Lorel</span>
+      <span class="sig-title">Poslední strážkyně Rarachu</span>
+    </div>
+    <div class="letter-seal"><span>🌳</span></div>
+    <p class="letter-footnote">„První pečeť čeká tam, kde do Modřan přijel železný had."</p>
+  </div>
+</section>
+
+<!-- JAK HRÁT -->
+<section id="jak-hrat">
+  <div class="section-label reveal">Průvodce hrou</div>
+  <h2 class="section-title reveal">Jak hra funguje</h2>
+  <div class="section-divider reveal"><span>✦</span></div>
+  <div class="guide-steps reveal">
+    <div class="guide-step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="step-title">Vytiskněte materiály</div>
+        <p>Stáhněte a vytiskněte herní karty, mapu, arch pečetí a dopis. Slepá mapa dostane políčka pro nalepení pečetí.</p>
+      </div>
+    </div>
+    <div class="guide-step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="step-title">Připravte pečetě</div>
+        <p>Rodiče schová pečetě u stanovišť nebo je vydá po splnění úkolu. Klíč pro rodiče má přesné instrukce.</p>
+      </div>
+    </div>
+    <div class="guide-step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="step-title">Vydejte dopis</div>
+        <p>Hráčky najdou zapečetěný dopis od Lorel — a hra začíná. Každá karta na stanovišti čeká na svém místě.</p>
+      </div>
+    </div>
+    <div class="guide-step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <div class="step-title">Putujte a sbírejte</div>
+        <p>Za každý splněný úkol pečeť do mapy. Až bude všech 12 pohromadě — Rarach se probudí.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section" id="hrat">
+  <div class="section-label">Připraveni?</div>
+  <h2 class="section-title" style="margin-bottom:1rem;">Vydejte se do království</h2>
+  <p>Stáhněte materiály, vytiskněte, připravte pečetě — a nechte elfí svět promlouvat skrze kameny a stromy Modřan.</p>
+</div>
+
+<!-- KE STAŽENÍ -->
+<section class="download-section" id="stahnout">
+  <div class="section-label reveal">Materiály ke stažení</div>
+  <h2 class="section-title reveal">Vše potřebné k tisku</h2>
+  <div class="section-divider reveal"><span>✦</span></div>
+  <p class="intro-text reveal">
+    Všechny soubory jsou připraveny pro domácí tisk na formát A4 / A5.
+    Doporučujeme barevný tisk na silnější papír.
+  </p>
+  <div class="download-grid reveal">
+    <div class="download-card">
+      <span class="download-icon">🗺️</span>
+      <span class="download-title">Mapa putování</span>
+      <span class="download-desc">Ilustrovaná mapa vnitrobloku se všemi 12 stanovišti. A4 na šířku.</span>
+      <a href="MAPA.jpg" class="download-btn" download>Stáhnout</a>
+    </div>
+    <div class="download-card">
+      <span class="download-icon">🗺️</span>
+      <span class="download-title">Mapa putování</span>
+      <span class="download-desc">Ilustrovaná mapa vnitrobloku se všemi 12 stanovišti. A4 na šířku.</span>
+      <a href="MAPA.pdf" class="download-btn" download>Stáhnout PDF</a>
+    </div>
+    <div class="download-card">
+      <span class="download-icon">📜</span>
+      <span class="download-title">Herní karty (1–12)</span>
+      <span class="download-desc">12 karet — příběh, výzva, odměna. Pergamenový styl.</span>
+      <a href="herni_karty.pdf" class="download-btn" download>Stáhnout PDF</a>
+    </div>
+    <div class="download-card">
+      <span class="download-icon">🔵</span>
+      <span class="download-title">Arch pečetí</span>
+      <span class="download-desc">12 medailonů k vystřižení nebo nalepení. Bílé pozadí.</span>
+      <a href="pecete.pdf" class="download-btn" download>Stáhnout PDF</a>
+    </div>
+    <div class="download-card">
+      <span class="download-icon">✉️</span>
+      <span class="download-title">Dopis od Lorel</span>
+      <span class="download-desc">Úvodní dopis k vytištění a přeložení. Pergamenový styl s pečetí.</span>
+      <a href="dopis.pdf" class="download-btn" download>Stáhnout PDF</a>
+    </div>
+    <div class="download-card">
+      <span class="download-icon">🔑</span>
+      <span class="download-title">Klíč pro rodiče</span>
+      <span class="download-desc">Přehled stanovišť, úkolů a podmínek vydání pečetí. A4 na výšku.</span>
+      <a href="Klic_k_hernim_kartam.pdf" class="download-btn" download>Stáhnout PDF</a>
+    </div>
+  </div>
+  <p class="download-note reveal">Soubory jsou ve formátu PDF, připravené pro tisk bez úprav.</p>
+</section>
+
+<!-- ZPĚTNÁ VAZBA -->
+<section id="zpetna-vazba" class="feedback-section">
+  <div class="section-label reveal">Po hře</div>
+  <h2 class="section-title reveal">Jak to dopadlo?</h2>
+  <div class="section-divider reveal"><span>✦</span></div>
+  <div class="feedback-box reveal">
+    <p>
+      Rarach byl probuzen nebo spí dál? Řekněte nám, jak hra dopadla —
+      co fungovalo, co by šlo lépe, co hráčky bavilo nejvíc.
+      Vaše zpětná vazba pomůže vylepšit hru pro další poutnice.
+    </p>
+    <a href="https://forms.gle/6tAvfFWWBSVkVxYM9" target="_blank" class="btn-secondary">Vyplnit krátký formulář</a>
+  </div>
+</section>
+
+</div><!-- /page-body -->
+
+<footer>
+  <span class="footer-seal">🌳</span>
+  <p>Mapa království Rarach · Parkové muzeum Modřany</p>
+  <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(201,168,76,0.15); font-family: 'Crimson Text', serif; font-size: 0.9rem; letter-spacing: normal; text-transform: none; opacity: 0.7; color: var(--parchment-dark); line-height: 1.8;">
+    <strong style="color: var(--gold-light); font-family: 'Cinzel', serif; font-size: 0.85rem; letter-spacing: 0.05em;">Hru vytvořili Emma a Petr Šimandlovi</strong><br>
+    Reálie: Parkové muzeum Staré Modřany
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Nav opacity on hero
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.opacity = window.scrollY < 50 ? '0' : '1';
+  });
+  nav.style.opacity = '0';
+</script>
+</body>
+</html>
